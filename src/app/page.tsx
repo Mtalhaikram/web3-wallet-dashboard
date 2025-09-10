@@ -1,0 +1,100 @@
+"use client";
+
+import { useChainId } from "wagmi";
+import { NETWORKS } from "@/constants/networks";
+import { useState } from "react";
+import WalletConnect from "@/components/WalletConnect";
+import TokenSelector from "@/components/TokenSelector";
+import SendETH from "@/components/SendETH";
+
+export default function Home() {
+  const chainId = useChainId();
+  const isSupportedNetwork = NETWORKS.some(network => network.id === chainId);
+  const isConnected = chainId !== undefined;
+  const [isWarningDismissed, setIsWarningDismissed] = useState(false);
+
+  return (
+    <main className={`flex items-center justify-center flex-col min-h-screen ${
+      isConnected && !isSupportedNetwork ? 'main-content-with-banner' : ''
+    }`}>
+      {/* Global Network Warning */}
+      {isConnected && !isSupportedNetwork && !isWarningDismissed && (
+        <div className="fixed top-4 left-4 right-4 z-50 p-4 bg-red-500 text-white rounded-lg shadow-lg network-warning-banner">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <span className="text-2xl">🚨</span>
+              <div>
+                <h2 className="font-bold text-lg">Unsupported Network Detected</h2>
+                <p className="text-sm opacity-90">
+                  You&apos;re connected to an unsupported network (Chain ID: {chainId}). 
+                  Please switch to a supported network to use this application.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="text-right">
+                <p className="text-xs opacity-75">Supported Networks:</p>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {NETWORKS.slice(0, 3).map((network) => (
+                    <span key={network.id} className="inline-block px-2 py-1 bg-red-600 text-white text-xs rounded">
+                      {network.icon} {network.name}
+                    </span>
+                  ))}
+                  {NETWORKS.length > 3 && (
+                    <span className="inline-block px-2 py-1 bg-red-600 text-white text-xs rounded">
+                      +{NETWORKS.length - 3} more
+                    </span>
+                  )}
+                </div>
+              </div>
+              <button
+                onClick={() => setIsWarningDismissed(true)}
+                className="text-white hover:text-red-200 transition-colors p-1"
+                title="Dismiss warning"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="w-full max-w-4xl mx-auto p-6 space-y-6">
+        <WalletConnect />
+        
+        {/* Send ETH Section */}
+        {isConnected && (
+          <SendETH />
+        )}
+        
+        {/* Token Balance Section */}
+        {isConnected && (
+          <div className="bg-white rounded-lg shadow-sm border p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              💰 Token Balances
+            </h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Select tokens to view your ERC-20 token balances on the current network.
+            </p>
+            <TokenSelector />
+          </div>
+        )}
+      </div>
+      
+      {/* Small reminder when warning is dismissed */}
+      {isConnected && !isSupportedNetwork && isWarningDismissed && (
+        <div className="mt-4 p-2 bg-red-100 border border-red-300 rounded text-xs text-red-700 text-center">
+          ⚠️ You&apos;re still on an unsupported network. 
+          <button 
+            onClick={() => setIsWarningDismissed(false)}
+            className="ml-2 underline hover:no-underline"
+          >
+            Show warning again
+          </button>
+        </div>
+      )}
+    </main>
+  );
+}
