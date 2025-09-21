@@ -197,7 +197,7 @@ export default function ConnectWallet() {
                   onClick={refreshWalletStatus}
                   className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors cursor-pointer"
                 >
-                  🔄 Refresh Status
+                  🔄 Refresh Status 
                 </button>
               </div>
             </div>
