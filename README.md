@@ -1,4 +1,4 @@
-#🌐 Web3 Wallet Dashboard
+# 🌐 Web3 Wallet Dashboard
 
 A Next.js Web3 wallet dashboard that allows users to:
 
@@ -14,7 +14,7 @@ A Next.js Web3 wallet dashboard that allows users to:
 
 Built with Next.js 14, TypeScript, Tailwind CSS, Wagmi, and Ethers.js.
 
-#🚀 Features
+# 🚀 Features
 
 ✅ Wallet Connect (MetaMask, WalletConnect, Coinbase Wallet, etc.)
 
@@ -26,7 +26,7 @@ Built with Next.js 14, TypeScript, Tailwind CSS, Wagmi, and Ethers.js.
 
 ✅ Responsive UI with Tailwind CSS
 
-#🛠️ Tech Stack
+# 🛠️ Tech Stack
 
 Next.js
  – React framework
@@ -51,7 +51,7 @@ git clone https://github.com/YOUR_USERNAME/web3-wallet-dashboard.git
 cd web3-wallet-dashboard
 
 
-#Install dependencies:
+# Install dependencies:
 
 npm install
 # or
