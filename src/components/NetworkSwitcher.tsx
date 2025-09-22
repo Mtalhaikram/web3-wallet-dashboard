@@ -44,47 +44,54 @@ export default function NetworkSwitcher() {
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       {/* Current Network Status */}
       {isConnected && (
-        <div className={`text-xs px-2 py-1 rounded-full inline-block ${
+        <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
           isSupportedNetwork 
-            ? "bg-green-100 text-green-800" 
-            : "bg-red-100 text-red-800"
+            ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200" 
+            : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200"
         }`}>
-          {isSupportedNetwork ? "✅ Supported Network" : "❌ Unsupported Network"}
+          <span className="mr-2">{isSupportedNetwork ? "✅" : "❌"}</span>
+          {isSupportedNetwork ? "Supported Network" : "Unsupported Network"}
         </div>
       )}
 
       {/* Network Status Indicator */}
       {!isSupportedNetwork && (
-        <div className="p-4 bg-red-50 border-2 border-red-200 rounded-lg">
-          <div className="flex items-center space-x-2 text-red-700 mb-2">
-            <span className="text-xl">⚠️</span>
-            <span className="text-sm font-semibold">Unsupported Network</span>
+        <div className="p-6 bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-700 rounded-2xl">
+          <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+                <span className="text-2xl">⚠️</span>
+              </div>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-red-800 dark:text-red-200 mb-2">Unsupported Network</h3>
+              <p className="text-sm text-red-700 dark:text-red-300 mb-4">
+                You&apos;re connected to an unsupported network (Chain ID: {chainId}). 
+                This application only supports the networks listed below.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {NETWORKS.slice(0, 4).map((network) => (
+                  <span key={network.id} className="inline-flex items-center px-3 py-1 bg-red-100 dark:bg-red-800/50 text-red-800 dark:text-red-200 text-sm rounded-full border border-red-200 dark:border-red-700">
+                    {network.icon} {network.name}
+                  </span>
+                ))}
+                {NETWORKS.length > 4 && (
+                  <span className="inline-flex items-center px-3 py-1 bg-red-100 dark:bg-red-800/50 text-red-800 dark:text-red-200 text-sm rounded-full border border-red-200 dark:border-red-700">
+                    +{NETWORKS.length - 4} more
+                  </span>
+                )}
+              </div>
+              <button
+                onClick={() => setIsOpen(true)}
+                className="btn-destructive px-6 py-3"
+              >
+                Switch to Supported Network
+              </button>
+            </div>
           </div>
-          <p className="text-sm text-red-600 mb-3">
-            You&apos;re connected to an unsupported network (Chain ID: {chainId}). 
-            This application only supports the networks listed below.
-          </p>
-          <div className="flex flex-wrap gap-2 mb-3">
-            {NETWORKS.slice(0, 4).map((network) => (
-              <span key={network.id} className="inline-flex items-center px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
-                {network.icon} {network.name}
-              </span>
-            ))}
-            {NETWORKS.length > 4 && (
-              <span className="inline-flex items-center px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
-                +{NETWORKS.length - 4} more
-              </span>
-            )}
-          </div>
-          <button
-            onClick={() => setIsOpen(true)}
-            className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors cursor-pointer"
-          >
-            Switch to Supported Network
-          </button>
         </div>
       )}
 
@@ -92,26 +99,30 @@ export default function NetworkSwitcher() {
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors cursor-pointer ${
+          className={`flex items-center space-x-3 px-6 py-4 rounded-2xl transition-all duration-200 cursor-pointer w-full ${
             isSupportedNetwork 
-              ? "bg-gray-100 hover:bg-gray-200" 
-              : "bg-red-100 hover:bg-red-200 border-2 border-red-300"
+              ? "bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-600 shadow-lg hover:shadow-xl" 
+              : "bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 border-2 border-red-300 dark:border-red-700 shadow-lg hover:shadow-xl"
           }`}
         >
-          <span className="text-lg">{currentNetworkDisplay.icon}</span>
-          <span className={`font-medium ${!isSupportedNetwork ? "text-red-700" : ""}`}>
-            {currentNetworkDisplay.name}
-          </span>
-          <span className={`text-sm ${!isSupportedNetwork ? "text-red-600" : "text-gray-500"}`}>
-            ({currentNetworkDisplay.symbol})
-          </span>
+          <span className="text-2xl">{currentNetworkDisplay.icon}</span>
+          <div className="flex-1 text-left">
+            <div className={`font-semibold text-lg ${!isSupportedNetwork ? "text-red-700 dark:text-red-200" : "text-gray-900 dark:text-white"}`}>
+              {currentNetworkDisplay.name}
+            </div>
+            <div className={`text-sm ${!isSupportedNetwork ? "text-red-600 dark:text-red-300" : "text-gray-500 dark:text-gray-400"}`}>
+              {currentNetworkDisplay.symbol}
+            </div>
+          </div>
           {!isSupportedNetwork && (
-            <span className="text-red-500 text-xs bg-red-200 px-2 py-1 rounded-full">
+            <span className="text-red-500 dark:text-red-400 text-xs bg-red-200 dark:bg-red-800 px-3 py-1 rounded-full font-medium">
               Unsupported
             </span>
           )}
           <svg
-            className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            className={`w-5 h-5 transition-transform duration-200 ${isOpen ? "rotate-180" : ""} ${
+              !isSupportedNetwork ? "text-red-500 dark:text-red-400" : "text-gray-500 dark:text-gray-400"
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -121,61 +132,67 @@ export default function NetworkSwitcher() {
         </button>
 
         {isOpen && (
-          <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-            <div className="p-3 border-b border-gray-200">
-              <h3 className="font-medium text-gray-900">Select Network</h3>
-              <p className="text-sm text-gray-500">Choose the network you want to connect to</p>
+          <div className="absolute top-full left-0 mt-3 w-full max-w-sm bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-2xl shadow-2xl z-50 overflow-hidden">
+            <div className="p-6 border-b border-gray-200 dark:border-slate-600">
+              <h3 className="font-bold text-gray-900 dark:text-white text-lg">Select Network</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Choose the network you want to connect to</p>
               {!isSupportedNetwork && (
-                <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-700">
-                  <strong>Current network not supported.</strong> Please select one of the supported networks below.
+                <div className="mt-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl">
+                  <div className="text-xs text-red-700 dark:text-red-300 font-medium">
+                    <strong>Current network not supported.</strong> Please select one of the supported networks below.
+                  </div>
                 </div>
               )}
             </div>
             
-            <div className="max-h-64 overflow-y-auto">
+            <div className="max-h-80 overflow-y-auto">
               {NETWORKS.map((network) => (
                 <button
                   key={network.id}
                   onClick={() => handleNetworkSwitch(network.id)}
                   disabled={isPending || chainId === network.id}
-                  className={`w-full flex items-center space-x-3 p-3 hover:bg-gray-50 transition-colors ${
+                  className={`w-full flex items-center space-x-4 p-4 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-200 ${
                     chainId === network.id 
                       ? isSupportedNetwork 
-                        ? "bg-blue-50 border-l-4 border-blue-500" 
-                        : "bg-red-50 border-l-4 border-red-500"
+                        ? "bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500" 
+                        : "bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500"
                       : ""
                   } ${isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                 >
-                  <span className="text-xl">{network.icon}</span>
+                  <span className="text-2xl">{network.icon}</span>
                   <div className="flex-1 text-left">
-                    <div className="font-medium text-gray-900 flex items-center space-x-2">
+                    <div className="font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
                       <span>{network.name}</span>
                       {network.isTestnet && (
-                        <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                        <span className="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded-full font-medium">
                           Testnet
                         </span>
                       )}
                       {chainId === network.id && !isSupportedNetwork && (
-                        <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
+                        <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 px-2 py-1 rounded-full font-medium">
                           Current (Unsupported)
                         </span>
                       )}
                     </div>
-                    <div className="text-sm text-gray-500">{network.symbol}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">{network.symbol}</div>
                   </div>
                   {chainId === network.id && (
-                    <span className={isSupportedNetwork ? "text-blue-500" : "text-red-500"}>✓</span>
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                      isSupportedNetwork ? "bg-blue-500" : "bg-red-500"
+                    }`}>
+                      <span className="text-white text-sm">✓</span>
+                    </div>
                   )}
                 </button>
               ))}
             </div>
             
-            <div className="p-3 border-t border-gray-200 bg-gray-50">
-              <p className="text-xs text-gray-500">
+            <div className="p-4 border-t border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 Note: Switching networks may require wallet approval
               </p>
               {!isSupportedNetwork && (
-                <p className="text-xs text-red-600 mt-1 font-medium">
+                <p className="text-xs text-red-600 dark:text-red-400 mt-2 font-medium">
                   ⚠️ You&apos;re currently on an unsupported network. Switch to a supported network to use all features.
                 </p>
               )}

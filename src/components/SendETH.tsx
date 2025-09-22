@@ -129,32 +129,61 @@ export default function SendETH() {
 
   if (!isConnected) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          💸 Send Native ETH
-        </h2>
-        <div className="text-center py-8 text-gray-500">
-          <p>Please connect your wallet to send ETH</p>
+      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 p-8 card-hover">
+        <div className="flex items-center space-x-3 mb-6">
+          <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-xl flex items-center justify-center">
+            <span className="text-2xl">💸</span>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              Send Native ETH
+            </h2>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Transfer native tokens
+            </p>
+          </div>
+        </div>
+        <div className="text-center py-12">
+          <div className="w-16 h-16 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-2xl">🔒</span>
+          </div>
+          <p className="text-gray-500 dark:text-gray-400 font-medium">Please connect your wallet to send ETH</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border p-6">
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">
-        💸 Send Native ETH
-      </h2>
+    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 p-8 card-hover">
+      <div className="flex items-center space-x-3 mb-6">
+        <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-xl flex items-center justify-center">
+          <span className="text-2xl">💸</span>
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Send Native ETH
+          </h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            Transfer native tokens
+          </p>
+        </div>
+      </div>
       
       {!isSupportedNetwork && (
-        <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded text-sm text-red-700">
-          ⚠️ <strong>Unsupported Network:</strong> Please switch to a supported network to send ETH.
+        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl">
+          <div className="flex items-center space-x-3">
+            <span className="text-red-500 text-lg">⚠️</span>
+            <div>
+              <div className="font-medium text-red-800 dark:text-red-200 text-sm">Unsupported Network</div>
+              <div className="text-red-700 dark:text-red-300 text-sm">Please switch to a supported network to send ETH.</div>
+            </div>
+          </div>
         </div>
       )}
 
-      <form onSubmit={handleSend} className="space-y-4">
-        <div>
-          <label htmlFor="recipient" className="block text-sm font-medium text-gray-700 mb-2">
+      <form onSubmit={handleSend} className="space-y-6">
+        <div className="space-y-2">
+          <label htmlFor="recipient" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Recipient Address
           </label>
           <input
@@ -163,13 +192,13 @@ export default function SendETH() {
             value={recipient}
             onChange={(e) => setRecipient(e.target.value)}
             placeholder="0x..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="input-field"
             disabled={isSending || !isSupportedNetwork}
           />
         </div>
 
-        <div>
-          <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="space-y-2">
+          <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Amount ({currentNetwork?.symbol || "ETH"})
           </label>
           <div className="relative">
@@ -181,11 +210,11 @@ export default function SendETH() {
               placeholder="0.0"
               step="0.000001"
               min="0"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="input-field pr-20"
               disabled={isSending || !isSupportedNetwork}
             />
             {balance && (
-              <div className="absolute right-3 top-2 text-xs text-gray-500">
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 dark:text-gray-400">
                 Max: {parseFloat(formatEther(balance.value)).toFixed(6)}
               </div>
             )}
@@ -193,60 +222,95 @@ export default function SendETH() {
         </div>
 
         {validationError && (
-          <div className="p-3 bg-red-100 border border-red-300 rounded text-sm text-red-700">
-            {validationError}
+          <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl">
+            <div className="flex items-center space-x-3">
+              <span className="text-red-500 text-lg">❌</span>
+              <div className="text-red-700 dark:text-red-300 text-sm">{validationError}</div>
+            </div>
           </div>
         )}
 
         <button
           type="submit"
           disabled={isSending || isValidating || !isSupportedNetwork}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSending ? "Sending..." : isValidating ? "Validating..." : `Send ${currentNetwork?.symbol || "ETH"}`}
+          {isSending ? (
+            <div className="flex items-center justify-center space-x-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span>Sending...</span>
+            </div>
+          ) : isValidating ? (
+            <div className="flex items-center justify-center space-x-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span>Validating...</span>
+            </div>
+          ) : (
+            `Send ${currentNetwork?.symbol || "ETH"}`
+          )}
         </button>
       </form>
 
       {/* Transaction Status */}
       {isSuccess && hash && (
-        <div className="mt-6 p-4 bg-green-100 border border-green-300 rounded-md">
-          <h3 className="font-semibold text-green-800 mb-2">✅ Transaction Sent Successfully!</h3>
-          <div className="space-y-2">
-            <p className="text-sm text-green-700">
-              <strong>Transaction Hash:</strong>
-            </p>
-            <p className="font-mono text-xs bg-green-50 p-2 rounded border break-all">
-              {hash}
-            </p>
-            <div className="flex space-x-2">
-              <a
-                href={getEtherscanUrl(hash)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors"
-              >
-                View on Etherscan
-                <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-              <button
-                onClick={resetForm}
-                className="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-colors"
-              >
-                Send Another
-              </button>
+        <div className="mt-8 p-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-2xl">
+          <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                <span className="text-2xl">✅</span>
+              </div>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-green-800 dark:text-green-200 text-lg mb-3">Transaction Sent Successfully!</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm text-green-700 dark:text-green-300 font-medium mb-2">Transaction Hash:</p>
+                  <div className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-green-200 dark:border-green-700">
+                    <p className="font-mono text-xs break-all text-gray-900 dark:text-gray-100">
+                      {hash}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={getEtherscanUrl(hash)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors font-medium"
+                  >
+                    View on Etherscan
+                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                  <button
+                    onClick={resetForm}
+                    className="btn-secondary px-4 py-2 text-sm"
+                  >
+                    Send Another
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       )}
 
       {isError && error && (
-        <div className="mt-6 p-4 bg-red-100 border border-red-300 rounded-md">
-          <h3 className="font-semibold text-red-800 mb-2">❌ Transaction Failed</h3>
-          <p className="text-sm text-red-700">
-            {error.message || "An error occurred while sending the transaction"}
-          </p>
+        <div className="mt-8 p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-2xl">
+          <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+                <span className="text-2xl">❌</span>
+              </div>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-red-800 dark:text-red-200 text-lg mb-2">Transaction Failed</h3>
+              <p className="text-sm text-red-700 dark:text-red-300">
+                {error.message || "An error occurred while sending the transaction"}
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>

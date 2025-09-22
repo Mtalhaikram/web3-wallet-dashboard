@@ -69,12 +69,15 @@ export default function TokenBalance({ token }: TokenBalanceProps) {
 
   if (isLoading) {
     return (
-      <div className="p-3 bg-gray-50 rounded-lg border">
-        <div className="flex items-center space-x-2">
-          <span className="text-lg">{token.icon}</span>
+      <div className="p-4 bg-gray-50 dark:bg-slate-700 rounded-xl border border-gray-200 dark:border-slate-600">
+        <div className="flex items-center space-x-3">
+          <span className="text-2xl">{token.icon}</span>
           <div className="flex-1">
-            <div className="text-sm font-medium text-gray-700">{token.symbol}</div>
-            <div className="text-xs text-gray-500">Loading balance...</div>
+            <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">{token.symbol}</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center space-x-2">
+              <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              <span>Loading balance...</span>
+            </div>
           </div>
         </div>
       </div>
@@ -83,12 +86,12 @@ export default function TokenBalance({ token }: TokenBalanceProps) {
 
   if (isError) {
     return (
-      <div className="p-3 bg-red-50 rounded-lg border border-red-200">
-        <div className="flex items-center space-x-2">
-          <span className="text-lg">{token.icon}</span>
+      <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-700">
+        <div className="flex items-center space-x-3">
+          <span className="text-2xl">{token.icon}</span>
           <div className="flex-1">
-            <div className="text-sm font-medium text-red-700">{token.symbol}</div>
-            <div className="text-xs text-red-500">Failed to load balance</div>
+            <div className="text-sm font-semibold text-red-700 dark:text-red-300">{token.symbol}</div>
+            <div className="text-xs text-red-500 dark:text-red-400">Failed to load balance</div>
           </div>
         </div>
       </div>
@@ -98,20 +101,20 @@ export default function TokenBalance({ token }: TokenBalanceProps) {
   const formattedBalance = formatBalance(balance, token.decimals);
 
   return (
-    <div className="p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors">
+    <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-200 hover:shadow-md card-hover">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <span className="text-lg">{token.icon}</span>
+        <div className="flex items-center space-x-3">
+          <span className="text-2xl">{token.icon}</span>
           <div>
-            <div className="text-sm font-medium text-gray-900">{token.symbol}</div>
-            <div className="text-xs text-gray-500">{token.name}</div>
+            <div className="text-sm font-semibold text-gray-900 dark:text-white">{token.symbol}</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">{token.name}</div>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-sm font-mono text-gray-900">
+          <div className="text-sm font-mono text-gray-900 dark:text-white font-semibold">
             {formattedBalance}
           </div>
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-gray-500 dark:text-gray-400">
             {token.symbol}
           </div>
         </div>
