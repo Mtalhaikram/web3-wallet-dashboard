@@ -69,7 +69,7 @@ export default function TokenSelector() {
 
       {/* Available Tokens List */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Available Tokens</h3>
+        <h3 className="text-lg font-semibold  text-white">Available Tokens</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {availableTokens.map((token) => {
             const isSelected = selectedTokens.some(t => t.address === token.address);

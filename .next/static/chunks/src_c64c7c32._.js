@@ -462,7 +462,7 @@ function NetworkSwitcher(param) {
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     onClick: ()=>setIsOpen(!isOpen),
-                    className: "flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ".concat(isSupportedNetwork ? "bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-600 shadow-sm hover:shadow-md" : "bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 border border-red-300 dark:border-red-700 shadow-sm hover:shadow-md"),
+                    className: "flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ".concat(isSupportedNetwork ? "bg-[#1f1f1f] hover:bg-[#2a2a2a] border border-[#333333] shadow-sm hover:shadow-md hover:shadow-blue-500/10" : "bg-red-600/20 hover:bg-red-600/30 border border-red-600/30 shadow-sm hover:shadow-md hover:shadow-red-500/10"),
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                             className: "text-lg",
@@ -476,7 +476,7 @@ function NetworkSwitcher(param) {
                             className: "hidden sm:block text-left",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-sm font-medium ".concat(!isSupportedNetwork ? "text-red-700 dark:text-red-200" : "text-gray-900 dark:text-white"),
+                                    className: "text-sm font-medium ".concat(!isSupportedNetwork ? "text-red-400" : "text-white"),
                                     children: currentNetworkDisplay.name.length > 12 ? "".concat(currentNetworkDisplay.name.substring(0, 12), "...") : currentNetworkDisplay.name
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -484,7 +484,7 @@ function NetworkSwitcher(param) {
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-xs ".concat(!isSupportedNetwork ? "text-red-600 dark:text-red-300" : "text-gray-500 dark:text-gray-400"),
+                                    className: "text-xs ".concat(!isSupportedNetwork ? "text-red-300" : "text-[#a0a0a0]"),
                                     children: currentNetworkDisplay.symbol
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -498,7 +498,7 @@ function NetworkSwitcher(param) {
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                            className: "w-4 h-4 transition-transform duration-200 ".concat(isOpen ? "rotate-180" : "", " ").concat(!isSupportedNetwork ? "text-red-500 dark:text-red-400" : "text-gray-500 dark:text-gray-400"),
+                            className: "w-4 h-4 transition-transform duration-200 ".concat(isOpen ? "rotate-180" : "", " ").concat(!isSupportedNetwork ? "text-red-400" : "text-[#a0a0a0]"),
                             fill: "none",
                             stroke: "currentColor",
                             viewBox: "0 0 24 24",
@@ -524,13 +524,13 @@ function NetworkSwitcher(param) {
                     columnNumber: 9
                 }, this),
                 isOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "absolute top-full right-0 mt-2 w-80 sm:w-80 network-dropdown-mobile bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl shadow-2xl z-50 overflow-hidden",
+                    className: "absolute top-full right-0 mt-2 w-80 sm:w-80 network-dropdown-mobile bg-[#1f1f1f] border border-[#333333] rounded-xl shadow-2xl z-50 overflow-hidden",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "p-4 border-b border-gray-200 dark:border-slate-600",
+                            className: "p-4 border-b border-[#333333]",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                    className: "font-bold text-gray-900 dark:text-white text-lg",
+                                    className: "font-bold text-white text-lg",
                                     children: "Select Network"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -538,7 +538,7 @@ function NetworkSwitcher(param) {
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-sm text-gray-500 dark:text-gray-400 mt-1",
+                                    className: "text-sm text-[#a0a0a0] mt-1",
                                     children: "Choose the network you want to connect to"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -546,9 +546,9 @@ function NetworkSwitcher(param) {
                                     columnNumber: 15
                                 }, this),
                                 !isSupportedNetwork && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "mt-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg",
+                                    className: "mt-3 p-3 bg-red-600/20 border border-red-600/30 rounded-lg",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-xs text-red-700 dark:text-red-300 font-medium",
+                                        className: "text-xs text-red-400 font-medium",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
                                                 children: "Current network not supported."
@@ -580,7 +580,7 @@ function NetworkSwitcher(param) {
                             children: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["NETWORKS"].map((network)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>handleNetworkSwitch(network.id),
                                     disabled: isPending || chainId === network.id,
-                                    className: "w-full flex items-center space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-200 ".concat(chainId === network.id ? isSupportedNetwork ? "bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500" : "bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500" : "", " ").concat(isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"),
+                                    className: "w-full flex items-center space-x-3 p-3 hover:bg-[#2a2a2a] transition-all duration-200 ".concat(chainId === network.id ? isSupportedNetwork ? "bg-blue-600/20 border-l-4 border-blue-500" : "bg-red-600/20 border-l-4 border-red-500" : "", " ").concat(isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"),
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "text-xl",
@@ -594,7 +594,7 @@ function NetworkSwitcher(param) {
                                             className: "flex-1 text-left",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "font-semibold text-gray-900 dark:text-white flex items-center space-x-2",
+                                                    className: "font-semibold text-white flex items-center space-x-2",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: network.name
@@ -604,7 +604,7 @@ function NetworkSwitcher(param) {
                                                             columnNumber: 23
                                                         }, this),
                                                         network.isTestnet && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded-full font-medium",
+                                                            className: "text-xs bg-yellow-600/20 text-yellow-400 px-2 py-1 rounded-full font-medium",
                                                             children: "Testnet"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -618,7 +618,7 @@ function NetworkSwitcher(param) {
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "text-sm text-gray-500 dark:text-gray-400",
+                                                    className: "text-sm text-[#a0a0a0]",
                                                     children: network.symbol
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -658,9 +658,9 @@ function NetworkSwitcher(param) {
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "p-3 border-t border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50",
+                            className: "p-3 border-t border-[#333333] bg-[#1a1a1a]",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-xs text-gray-500 dark:text-gray-400",
+                                className: "text-xs text-[#a0a0a0]",
                                 children: "Note: Switching networks may require wallet approval"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -698,7 +698,7 @@ function NetworkSwitcher(param) {
         className: "space-y-4",
         children: [
             isConnected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ".concat(isSupportedNetwork ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200" : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200"),
+                className: "inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ".concat(isSupportedNetwork ? "bg-green-600/20 text-green-400 border border-green-600/30" : "bg-red-600/20 text-red-400 border border-red-600/30"),
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                         className: "mr-2",
@@ -716,7 +716,7 @@ function NetworkSwitcher(param) {
                 columnNumber: 9
             }, this),
             !isSupportedNetwork && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "p-6 bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-700 rounded-2xl",
+                className: "p-6 bg-red-600/20 border-2 border-red-600/30 rounded-2xl",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex items-start space-x-4",
                     children: [
@@ -746,7 +746,7 @@ function NetworkSwitcher(param) {
                             className: "flex-1",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                    className: "text-lg font-bold text-red-800 dark:text-red-200 mb-2",
+                                    className: "text-lg font-bold text-red-400 mb-2",
                                     children: "Unsupported Network"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -754,7 +754,7 @@ function NetworkSwitcher(param) {
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-sm text-red-700 dark:text-red-300 mb-4",
+                                    className: "text-sm text-red-300 mb-4",
                                     children: [
                                         "You're connected to an unsupported network (Chain ID: ",
                                         chainId,
@@ -769,7 +769,7 @@ function NetworkSwitcher(param) {
                                     className: "flex flex-wrap gap-2 mb-4",
                                     children: [
                                         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["NETWORKS"].slice(0, 4).map((network)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "inline-flex items-center px-3 py-1 bg-red-100 dark:bg-red-800/50 text-red-800 dark:text-red-200 text-sm rounded-full border border-red-200 dark:border-red-700",
+                                                className: "inline-flex items-center px-3 py-1 bg-red-600/30 text-red-400 text-sm rounded-full border border-red-600/30",
                                                 children: [
                                                     network.icon,
                                                     " ",
@@ -781,7 +781,7 @@ function NetworkSwitcher(param) {
                                                 columnNumber: 19
                                             }, this)),
                                         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["NETWORKS"].length > 4 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "inline-flex items-center px-3 py-1 bg-red-100 dark:bg-red-800/50 text-red-800 dark:text-red-200 text-sm rounded-full border border-red-200 dark:border-red-700",
+                                            className: "inline-flex items-center px-3 py-1 bg-red-600/30 text-red-400 text-sm rounded-full border border-red-600/30",
                                             children: [
                                                 "+",
                                                 __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["NETWORKS"].length - 4,
@@ -829,7 +829,7 @@ function NetworkSwitcher(param) {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: ()=>setIsOpen(!isOpen),
-                        className: "flex items-center space-x-3 px-6 py-4 rounded-2xl transition-all duration-200 cursor-pointer w-full ".concat(isSupportedNetwork ? "bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-600 shadow-lg hover:shadow-xl" : "bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 border-2 border-red-300 dark:border-red-700 shadow-lg hover:shadow-xl"),
+                        className: "flex items-center space-x-3 px-6 py-4 rounded-2xl transition-all duration-200 cursor-pointer w-full ".concat(isSupportedNetwork ? "bg-[#1f1f1f] hover:bg-[#2a2a2a] border border-[#333333] shadow-lg hover:shadow-xl hover:shadow-blue-500/10" : "bg-red-600/20 hover:bg-red-600/30 border-2 border-red-600/30 shadow-lg hover:shadow-xl hover:shadow-red-500/10"),
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "text-2xl",
@@ -843,7 +843,7 @@ function NetworkSwitcher(param) {
                                 className: "flex-1 text-left",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "font-semibold text-lg ".concat(!isSupportedNetwork ? "text-red-700 dark:text-red-200" : "text-gray-900 dark:text-white"),
+                                        className: "font-semibold text-lg ".concat(!isSupportedNetwork ? "text-red-400" : "text-white"),
                                         children: currentNetworkDisplay.name
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -851,7 +851,7 @@ function NetworkSwitcher(param) {
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-sm ".concat(!isSupportedNetwork ? "text-red-600 dark:text-red-300" : "text-gray-500 dark:text-gray-400"),
+                                        className: "text-sm ".concat(!isSupportedNetwork ? "text-red-300" : "text-[#a0a0a0]"),
                                         children: currentNetworkDisplay.symbol
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -865,7 +865,7 @@ function NetworkSwitcher(param) {
                                 columnNumber: 11
                             }, this),
                             !isSupportedNetwork && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-red-500 dark:text-red-400 text-xs bg-red-200 dark:bg-red-800 px-3 py-1 rounded-full font-medium",
+                                className: "text-red-400 text-xs bg-red-600/30 px-3 py-1 rounded-full font-medium",
                                 children: "Unsupported"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -873,7 +873,7 @@ function NetworkSwitcher(param) {
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                className: "w-5 h-5 transition-transform duration-200 ".concat(isOpen ? "rotate-180" : "", " ").concat(!isSupportedNetwork ? "text-red-500 dark:text-red-400" : "text-gray-500 dark:text-gray-400"),
+                                className: "w-5 h-5 transition-transform duration-200 ".concat(isOpen ? "rotate-180" : "", " ").concat(!isSupportedNetwork ? "text-red-400" : "text-[#a0a0a0]"),
                                 fill: "none",
                                 stroke: "currentColor",
                                 viewBox: "0 0 24 24",
@@ -899,13 +899,13 @@ function NetworkSwitcher(param) {
                         columnNumber: 9
                     }, this),
                     isOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "absolute top-full left-0 mt-3 w-full max-w-sm bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-2xl shadow-2xl z-50 overflow-hidden",
+                        className: "absolute top-full left-0 mt-3 w-full max-w-sm bg-[#1f1f1f] border border-[#333333] rounded-2xl shadow-2xl z-50 overflow-hidden",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "p-6 border-b border-gray-200 dark:border-slate-600",
+                                className: "p-6 border-b border-[#333333]",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "font-bold text-gray-900 dark:text-white text-lg",
+                                        className: "font-bold text-white text-lg",
                                         children: "Select Network"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -913,7 +913,7 @@ function NetworkSwitcher(param) {
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-sm text-gray-500 dark:text-gray-400 mt-1",
+                                        className: "text-sm text-[#a0a0a0] mt-1",
                                         children: "Choose the network you want to connect to"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -921,9 +921,9 @@ function NetworkSwitcher(param) {
                                         columnNumber: 15
                                     }, this),
                                     !isSupportedNetwork && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "mt-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl",
+                                        className: "mt-3 p-3 bg-red-600/20 border border-red-600/30 rounded-xl",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "text-xs text-red-700 dark:text-red-300 font-medium",
+                                            className: "text-xs text-red-400 font-medium",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
                                                     children: "Current network not supported."
@@ -955,7 +955,7 @@ function NetworkSwitcher(param) {
                                 children: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["NETWORKS"].map((network)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>handleNetworkSwitch(network.id),
                                         disabled: isPending || chainId === network.id,
-                                        className: "w-full flex items-center space-x-4 p-4 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-200 ".concat(chainId === network.id ? isSupportedNetwork ? "bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500" : "bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500" : "", " ").concat(isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"),
+                                        className: "w-full flex items-center space-x-4 p-4 hover:bg-[#2a2a2a] transition-all duration-200 ".concat(chainId === network.id ? isSupportedNetwork ? "bg-blue-600/20 border-l-4 border-blue-500" : "bg-red-600/20 border-l-4 border-red-500" : "", " ").concat(isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"),
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "text-2xl",
@@ -969,7 +969,7 @@ function NetworkSwitcher(param) {
                                                 className: "flex-1 text-left",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "font-semibold text-gray-900 dark:text-white flex items-center space-x-2",
+                                                        className: "font-semibold text-white flex items-center space-x-2",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: network.name
@@ -979,7 +979,7 @@ function NetworkSwitcher(param) {
                                                                 columnNumber: 23
                                                             }, this),
                                                             network.isTestnet && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded-full font-medium",
+                                                                className: "text-xs bg-yellow-600/20 text-yellow-400 px-2 py-1 rounded-full font-medium",
                                                                 children: "Testnet"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -987,7 +987,7 @@ function NetworkSwitcher(param) {
                                                                 columnNumber: 25
                                                             }, this),
                                                             chainId === network.id && !isSupportedNetwork && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 px-2 py-1 rounded-full font-medium",
+                                                                className: "text-xs bg-red-600/30 text-red-400 px-2 py-1 rounded-full font-medium",
                                                                 children: "Current (Unsupported)"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -1001,7 +1001,7 @@ function NetworkSwitcher(param) {
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "text-sm text-gray-500 dark:text-gray-400",
+                                                        className: "text-sm text-[#a0a0a0]",
                                                         children: network.symbol
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -1041,10 +1041,10 @@ function NetworkSwitcher(param) {
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "p-4 border-t border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50",
+                                className: "p-4 border-t border-[#333333] bg-[#1a1a1a]",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-xs text-gray-500 dark:text-gray-400",
+                                        className: "text-xs text-[#a0a0a0]",
                                         children: "Note: Switching networks may require wallet approval"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -1052,7 +1052,7 @@ function NetworkSwitcher(param) {
                                         columnNumber: 15
                                     }, this),
                                     !isSupportedNetwork && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-xs text-red-600 dark:text-red-400 mt-2 font-medium",
+                                        className: "text-xs text-red-400 mt-2 font-medium",
                                         children: "⚠️ You're currently on an unsupported network. Switch to a supported network to use all features."
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/NetworkSwitcher.tsx",
@@ -2406,7 +2406,7 @@ function TokenSelector() {
                 className: "space-y-4",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                        className: "text-lg font-semibold text-gray-900 dark:text-white",
+                        className: "text-lg font-semibold  text-white",
                         children: "Available Tokens"
                     }, void 0, false, {
                         fileName: "[project]/src/components/TokenSelector.tsx",
@@ -3298,10 +3298,10 @@ function GlobalLayout(param) {
     const isSupportedNetwork = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["NETWORKS"].some((network)=>network.id === chainId);
     const [isWarningDismissed, setIsWarningDismissed] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "min-h-screen bg-gray-50 dark:bg-slate-900",
+        className: "min-h-screen bg-[#121212]",
         children: [
             isConnected && !isSupportedNetwork && !isWarningDismissed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "fixed top-4 left-4 right-4 z-50 p-4 bg-red-500/90 backdrop-blur-md text-white rounded-xl shadow-2xl network-warning-banner border border-red-400/20",
+                className: "fixed top-4 left-4 right-4 z-50 p-4 bg-red-600/90 backdrop-blur-md text-white rounded-xl shadow-2xl network-warning-banner border border-red-500/30",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex items-center justify-between",
                     children: [
@@ -3454,7 +3454,7 @@ function GlobalLayout(param) {
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center space-x-4",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "text-xl font-bold text-gray-900 dark:text-white",
+                                className: "text-xl font-bold text-white",
                                 children: "Web3 Dashboard"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/GlobalLayout.tsx",
@@ -3470,7 +3470,7 @@ function GlobalLayout(param) {
                             className: "flex items-center space-x-4",
                             children: [
                                 isConnected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "hidden sm:flex items-center space-x-3 px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg",
+                                    className: "hidden sm:flex items-center space-x-3 px-4 py-2 bg-[#1f1f1f] rounded-lg border border-[#333333]",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "w-2 h-2 bg-green-500 rounded-full animate-pulse"
@@ -3480,7 +3480,7 @@ function GlobalLayout(param) {
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-sm font-medium text-gray-700 dark:text-gray-300 font-mono",
+                                            className: "text-sm font-medium text-[#e0e0e0] font-mono",
                                             children: [
                                                 address === null || address === void 0 ? void 0 : address.slice(0, 6),
                                                 "...",
@@ -3532,14 +3532,14 @@ function GlobalLayout(param) {
             isConnected && !isSupportedNetwork && isWarningDismissed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "fixed bottom-4 left-4 right-4 z-40 animate-fade-in",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-red-100 dark:bg-red-900/20 border border-red-300 dark:border-red-700 rounded-lg p-3 text-center backdrop-blur-sm",
+                    className: "bg-red-600/20 border border-red-600/30 rounded-lg p-3 text-center backdrop-blur-sm",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "text-sm text-red-700 dark:text-red-300",
+                        className: "text-sm text-red-400",
                         children: [
                             "⚠️ You're still on an unsupported network.",
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setIsWarningDismissed(false),
-                                className: "ml-2 underline hover:no-underline font-medium",
+                                className: "ml-2 underline hover:no-underline font-medium text-red-300 hover:text-red-200",
                                 children: "Show warning again"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/GlobalLayout.tsx",
@@ -3664,7 +3664,7 @@ function Home() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm font-medium text-gray-600 dark:text-gray-400",
+                                                        className: "text-sm font-medium text-[#a0a0a0]",
                                                         children: "Network"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -3672,7 +3672,7 @@ function Home() {
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-2xl font-bold text-gray-900 dark:text-white",
+                                                        className: "text-2xl font-bold text-white",
                                                         children: (currentNetwork === null || currentNetwork === void 0 ? void 0 : currentNetwork.name) || "Unknown"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -3686,7 +3686,7 @@ function Home() {
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center",
+                                                className: "w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-2xl",
                                                     children: (currentNetwork === null || currentNetwork === void 0 ? void 0 : currentNetwork.icon) || "❓"
@@ -3722,7 +3722,7 @@ function Home() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm font-medium text-gray-600 dark:text-gray-400",
+                                                        className: "text-sm font-medium text-[#a0a0a0]",
                                                         children: "Status"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -3730,7 +3730,7 @@ function Home() {
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-2xl font-bold text-gray-900 dark:text-white",
+                                                        className: "text-2xl font-bold text-white",
                                                         children: isConnected ? "Connected" : "Disconnected"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -3744,7 +3744,7 @@ function Home() {
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center",
+                                                className: "w-12 h-12 bg-green-600/20 rounded-lg flex items-center justify-center",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-2xl",
                                                     children: isConnected ? "✅" : "❌"
@@ -3780,7 +3780,7 @@ function Home() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm font-medium text-gray-600 dark:text-gray-400",
+                                                        className: "text-sm font-medium text-[#a0a0a0]",
                                                         children: "Chain ID"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -3788,7 +3788,7 @@ function Home() {
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-2xl font-bold text-gray-900 dark:text-white",
+                                                        className: "text-2xl font-bold text-white",
                                                         children: chainId || "N/A"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -3802,7 +3802,7 @@ function Home() {
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center",
+                                                className: "w-12 h-12 bg-purple-600/20 rounded-lg flex items-center justify-center",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-2xl",
                                                     children: "🔗"
@@ -3838,7 +3838,7 @@ function Home() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm font-medium text-gray-600 dark:text-gray-400",
+                                                        className: "text-sm font-medium text-[#a0a0a0]",
                                                         children: "Network Status"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -3846,7 +3846,7 @@ function Home() {
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-2xl font-bold text-gray-900 dark:text-white",
+                                                        className: "text-2xl font-bold text-white",
                                                         children: isSupportedNetwork ? "Supported" : "Unsupported"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -3860,7 +3860,7 @@ function Home() {
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center",
+                                                className: "w-12 h-12 bg-orange-600/20 rounded-lg flex items-center justify-center",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-2xl",
                                                     children: isSupportedNetwork ? "✅" : "⚠️"
@@ -3914,7 +3914,7 @@ function Home() {
                                             className: "dashboard-card-content",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                    className: "text-lg font-semibold text-gray-900 dark:text-white mb-4",
+                                                    className: "text-lg font-semibold text-white mb-4",
                                                     children: "Quick Actions"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/page.tsx",
@@ -3926,7 +3926,7 @@ function Home() {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                             onClick: ()=>setActiveTab("send"),
-                                                            className: "w-full p-4 text-left bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors dashboard-focus",
+                                                            className: "w-full p-4 text-left bg-blue-600/20 rounded-lg hover:bg-blue-600/30 transition-colors dashboard-focus",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "flex items-center space-x-3",
                                                                 children: [
@@ -3941,7 +3941,7 @@ function Home() {
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         children: [
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                className: "font-medium text-gray-900 dark:text-white",
+                                                                                className: "font-medium text-white",
                                                                                 children: "Send Tokens"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/page.tsx",
@@ -3949,7 +3949,7 @@ function Home() {
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                className: "text-sm text-gray-600 dark:text-gray-400",
+                                                                                className: "text-sm text-[#a0a0a0]",
                                                                                 children: "Transfer native tokens"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/page.tsx",
@@ -3975,7 +3975,7 @@ function Home() {
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                             onClick: ()=>setActiveTab("tokens"),
-                                                            className: "w-full p-4 text-left bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors dashboard-focus",
+                                                            className: "w-full p-4 text-left bg-green-600/20 rounded-lg hover:bg-green-600/30 transition-colors dashboard-focus",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "flex items-center space-x-3",
                                                                 children: [
@@ -3990,7 +3990,7 @@ function Home() {
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         children: [
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                className: "font-medium text-gray-900 dark:text-white",
+                                                                                className: "font-medium text-white",
                                                                                 children: "Manage Tokens"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/page.tsx",
@@ -3998,7 +3998,7 @@ function Home() {
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                className: "text-sm text-gray-600 dark:text-gray-400",
+                                                                                className: "text-sm text-[#a0a0a0]",
                                                                                 children: "View ERC-20 balances"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/page.tsx",
@@ -4095,7 +4095,7 @@ function Home() {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                className: "text-2xl font-bold text-gray-900 dark:text-white",
+                                                className: "text-2xl font-bold text-white",
                                                 children: "Token Balances"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
@@ -4103,7 +4103,7 @@ function Home() {
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-sm text-gray-600 dark:text-gray-300",
+                                                className: "text-sm text-[#a0a0a0]",
                                                 children: "Manage your ERC-20 tokens"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
@@ -4152,7 +4152,7 @@ function Home() {
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "dashboard-card-header",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-2xl font-bold text-gray-900 dark:text-white",
+                                className: "text-2xl font-bold text-white",
                                 children: "Settings"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
@@ -4171,7 +4171,7 @@ function Home() {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-lg font-semibold text-gray-900 dark:text-white mb-4",
+                                            className: "text-lg font-semibold text-white mb-4",
                                             children: "Network Settings"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/page.tsx",
@@ -4250,7 +4250,7 @@ function Home() {
                         }, void 0, false, {
                             fileName: "[project]/src/app/page.tsx",
                             lineNumber: 192,
-                            columnNumber: 11
+                            columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
@@ -4264,7 +4264,7 @@ function Home() {
                                 className: "lg:hidden p-4",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>setSidebarOpen(true),
-                                    className: "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dashboard-focus",
+                                    className: "text-[#a0a0a0] hover:text-white dashboard-focus",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                                         className: "w-6 h-6",
                                         fill: "none",
