@@ -4,7 +4,11 @@ import { useChainId, useSwitchChain } from "wagmi";
 import { useState } from "react";
 import { NETWORKS } from "@/constants/networks";
 
-export default function NetworkSwitcher() {
+interface NetworkSwitcherProps {
+  variant?: "header" | "full";
+}
+
+export default function NetworkSwitcher({ variant = "full" }: NetworkSwitcherProps) {
   const chainId = useChainId();
   const { switchChain, isPending } = useSwitchChain();
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +47,113 @@ export default function NetworkSwitcher() {
     }
   };
 
+  // Header variant - compact design
+  if (variant === "header") {
+    return (
+      <div className="relative">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+            isSupportedNetwork 
+              ? "bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-600 shadow-sm hover:shadow-md" 
+              : "bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 border border-red-300 dark:border-red-700 shadow-sm hover:shadow-md"
+          }`}
+        >
+          <span className="text-lg">{currentNetworkDisplay.icon}</span>
+          <div className="hidden sm:block text-left">
+            <div className={`text-sm font-medium ${!isSupportedNetwork ? "text-red-700 dark:text-red-200" : "text-gray-900 dark:text-white"}`}>
+              {currentNetworkDisplay.name.length > 12 ? 
+                `${currentNetworkDisplay.name.substring(0, 12)}...` : 
+                currentNetworkDisplay.name
+              }
+            </div>
+            <div className={`text-xs ${!isSupportedNetwork ? "text-red-600 dark:text-red-300" : "text-gray-500 dark:text-gray-400"}`}>
+              {currentNetworkDisplay.symbol}
+            </div>
+          </div>
+          <svg
+            className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""} ${
+              !isSupportedNetwork ? "text-red-500 dark:text-red-400" : "text-gray-500 dark:text-gray-400"
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {isOpen && (
+          <div className="absolute top-full right-0 mt-2 w-80 sm:w-80 network-dropdown-mobile bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl shadow-2xl z-50 overflow-hidden">
+            <div className="p-4 border-b border-gray-200 dark:border-slate-600">
+              <h3 className="font-bold text-gray-900 dark:text-white text-lg">Select Network</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Choose the network you want to connect to</p>
+              {!isSupportedNetwork && (
+                <div className="mt-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+                  <div className="text-xs text-red-700 dark:text-red-300 font-medium">
+                    <strong>Current network not supported.</strong> Please select one of the supported networks below.
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            <div className="max-h-80 overflow-y-auto">
+              {NETWORKS.map((network) => (
+                <button
+                  key={network.id}
+                  onClick={() => handleNetworkSwitch(network.id)}
+                  disabled={isPending || chainId === network.id}
+                  className={`w-full flex items-center space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-200 ${
+                    chainId === network.id 
+                      ? isSupportedNetwork 
+                        ? "bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500" 
+                        : "bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500"
+                      : ""
+                  } ${isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                >
+                  <span className="text-xl">{network.icon}</span>
+                  <div className="flex-1 text-left">
+                    <div className="font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
+                      <span>{network.name}</span>
+                      {network.isTestnet && (
+                        <span className="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded-full font-medium">
+                          Testnet
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">{network.symbol}</div>
+                  </div>
+                  {chainId === network.id && (
+                    <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                      isSupportedNetwork ? "bg-blue-500" : "bg-red-500"
+                    }`}>
+                      <span className="text-white text-xs">✓</span>
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
+            
+            <div className="p-3 border-t border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700/50">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Note: Switching networks may require wallet approval
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Backdrop to close dropdown when clicking outside */}
+        {isOpen && (
+          <div
+            className="fixed inset-0 z-40"
+            onClick={() => setIsOpen(false)}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // Full variant - original design for settings page
   return (
     <div className="space-y-4">
       {/* Current Network Status */}
