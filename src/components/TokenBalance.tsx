@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccount, useReadContract, useChainId } from "wagmi";
+import { useAccount, useReadContract, useChainId, useBalance } from "wagmi";
 import { getTokensForNetwork, Token } from "@/constants/tokens";
 import { useState } from "react";
 
@@ -37,15 +37,28 @@ export default function TokenBalance({ token }: TokenBalanceProps) {
   const { address } = useAccount();
   const chainId = useChainId();
 
-  const { data: balance, isLoading, isError } = useReadContract({
-    address: token.address, // Token contract address
+  // For native tokens, use useBalance hook
+  const { data: nativeBalance, isLoading: isNativeLoading, isError: isNativeError } = useBalance({
+    address: address,
+    query: {
+      enabled: !!address && token.isNative,
+    },
+  });
+
+  // For ERC-20 tokens, use useReadContract hook
+  const { data: erc20Balance, isLoading: isErc20Loading, isError: isErc20Error } = useReadContract({
+    address: token.address as `0x${string}`, // Token contract address
     abi: ERC20_ABI,
     functionName: "balanceOf", // Call balanceOf function
     args: address ? [address] : undefined, // Pass wallet address as argument
     query: {
-      enabled: !!address, // Only fetch if wallet is connected
+      enabled: !!address && !token.isNative && token.address !== 'native',
     },
   });
+
+  const isLoading = token.isNative ? isNativeLoading : isErc20Loading;
+  const isError = token.isNative ? isNativeError : isErc20Error;
+  const balance = token.isNative ? nativeBalance?.value : erc20Balance;
 
   const formatBalance = (balance: bigint | undefined, decimals: number) => {
     if (!balance) return "0";
@@ -69,12 +82,24 @@ export default function TokenBalance({ token }: TokenBalanceProps) {
 
   if (isLoading) {
     return (
-      <div className="p-4 bg-gray-50 dark:bg-slate-700 rounded-xl border border-gray-200 dark:border-slate-600">
+      <div className="p-4 bg-[#1f1f1f] rounded-xl border border-[#333333]">
         <div className="flex items-center space-x-3">
-          <span className="text-2xl">{token.icon}</span>
+          <div className="relative">
+            <span className="text-2xl">{token.icon}</span>
+            {token.isNative && (
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-[#1f1f1f]"></div>
+            )}
+          </div>
           <div className="flex-1">
-            <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">{token.symbol}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center space-x-2">
+            <div className="text-sm font-semibold text-white flex items-center gap-2">
+              {token.symbol}
+              {token.isNative && (
+                <span className="text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded-full">
+                  Native
+                </span>
+              )}
+            </div>
+            <div className="text-xs text-[#a0a0a0] flex items-center space-x-2">
               <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
               <span>Loading balance...</span>
             </div>
@@ -86,12 +111,24 @@ export default function TokenBalance({ token }: TokenBalanceProps) {
 
   if (isError) {
     return (
-      <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-700">
+      <div className="p-4 bg-red-600/20 rounded-xl border border-red-600/30">
         <div className="flex items-center space-x-3">
-          <span className="text-2xl">{token.icon}</span>
+          <div className="relative">
+            <span className="text-2xl">{token.icon}</span>
+            {token.isNative && (
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-[#1f1f1f]"></div>
+            )}
+          </div>
           <div className="flex-1">
-            <div className="text-sm font-semibold text-red-700 dark:text-red-300">{token.symbol}</div>
-            <div className="text-xs text-red-500 dark:text-red-400">Failed to load balance</div>
+            <div className="text-sm font-semibold text-red-400 flex items-center gap-2">
+              {token.symbol}
+              {token.isNative && (
+                <span className="text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded-full">
+                  Native
+                </span>
+              )}
+            </div>
+            <div className="text-xs text-red-300">Failed to load balance</div>
           </div>
         </div>
       </div>
@@ -101,20 +138,32 @@ export default function TokenBalance({ token }: TokenBalanceProps) {
   const formattedBalance = formatBalance(balance, token.decimals);
 
   return (
-    <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-200 hover:shadow-md card-hover">
+    <div className="p-4 bg-[#1f1f1f] rounded-xl border border-[#333333] hover:bg-[#2a2a2a] transition-all duration-200 hover:shadow-md hover:shadow-blue-500/5">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <span className="text-2xl">{token.icon}</span>
+          <div className="relative">
+            <span className="text-2xl">{token.icon}</span>
+            {token.isNative && (
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-[#1f1f1f]"></div>
+            )}
+          </div>
           <div>
-            <div className="text-sm font-semibold text-gray-900 dark:text-white">{token.symbol}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">{token.name}</div>
+            <div className="text-sm font-semibold text-white flex items-center gap-2">
+              {token.symbol}
+              {token.isNative && (
+                <span className="text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded-full">
+                  Native
+                </span>
+              )}
+            </div>
+            <div className="text-xs text-[#a0a0a0]">{token.name}</div>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-sm font-mono text-gray-900 dark:text-white font-semibold">
+          <div className="text-sm font-mono text-white font-semibold">
             {formattedBalance}
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">
+          <div className="text-xs text-[#a0a0a0]">
             {token.symbol}
           </div>
         </div>

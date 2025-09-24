@@ -1,16 +1,25 @@
 export interface Token {
-  address: `0x${string}`;
+  address: `0x${string}` | 'native';
   symbol: string;
   name: string;
   decimals: number;
   logoURI?: string;
   icon?: string;
+  isNative?: boolean;
 }
 
 // Token addresses for different networks
 export const TOKENS: Record<number, Token[]> = {
   // Ethereum Mainnet
   1: [
+    {
+      address: "native",
+      symbol: "ETH",
+      name: "Ethereum",
+      decimals: 18,
+      icon: "🔷",
+      isNative: true
+    },
     {
       address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
       symbol: "USDT",
@@ -50,6 +59,14 @@ export const TOKENS: Record<number, Token[]> = {
   // Polygon Mainnet
   137: [
     {
+      address: "native",
+      symbol: "MATIC",
+      name: "Polygon",
+      decimals: 18,
+      icon: "🟣",
+      isNative: true
+    },
+    {
       address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
       symbol: "USDT",
       name: "Tether USD",
@@ -81,6 +98,14 @@ export const TOKENS: Record<number, Token[]> = {
   // Arbitrum One
   42161: [
     {
+      address: "native",
+      symbol: "ETH",
+      name: "Ethereum",
+      decimals: 18,
+      icon: "🔵",
+      isNative: true
+    },
+    {
       address: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       symbol: "USDT",
       name: "Tether USD",
@@ -104,6 +129,14 @@ export const TOKENS: Record<number, Token[]> = {
   ],
   // Optimism
   10: [
+    {
+      address: "native",
+      symbol: "ETH",
+      name: "Ethereum",
+      decimals: 18,
+      icon: "🔴",
+      isNative: true
+    },
     {
       address: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
       symbol: "USDT",
@@ -129,6 +162,14 @@ export const TOKENS: Record<number, Token[]> = {
   // Testnets - using common testnet tokens
   11155111: [ // Sepolia
     {
+      address: "native",
+      symbol: "ETH",
+      name: "Ethereum",
+      decimals: 18,
+      icon: "🧪",
+      isNative: true
+    },
+    {
       address: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
       symbol: "LINK",
       name: "Chainlink Token",
@@ -137,6 +178,14 @@ export const TOKENS: Record<number, Token[]> = {
     }
   ],
   80001: [ // Polygon Mumbai
+    {
+      address: "native",
+      symbol: "MATIC",
+      name: "Polygon",
+      decimals: 18,
+      icon: "🧪",
+      isNative: true
+    },
     {
       address: "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
       symbol: "WMATIC",

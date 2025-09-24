@@ -1728,6 +1728,14 @@ const TOKENS = {
     // Ethereum Mainnet
     1: [
         {
+            address: "native",
+            symbol: "ETH",
+            name: "Ethereum",
+            decimals: 18,
+            icon: "🔷",
+            isNative: true
+        },
+        {
             address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
             symbol: "USDT",
             name: "Tether USD",
@@ -1766,6 +1774,14 @@ const TOKENS = {
     // Polygon Mainnet
     137: [
         {
+            address: "native",
+            symbol: "MATIC",
+            name: "Polygon",
+            decimals: 18,
+            icon: "🟣",
+            isNative: true
+        },
+        {
             address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
             symbol: "USDT",
             name: "Tether USD",
@@ -1797,6 +1813,14 @@ const TOKENS = {
     // Arbitrum One
     42161: [
         {
+            address: "native",
+            symbol: "ETH",
+            name: "Ethereum",
+            decimals: 18,
+            icon: "🔵",
+            isNative: true
+        },
+        {
             address: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
             symbol: "USDT",
             name: "Tether USD",
@@ -1820,6 +1844,14 @@ const TOKENS = {
     ],
     // Optimism
     10: [
+        {
+            address: "native",
+            symbol: "ETH",
+            name: "Ethereum",
+            decimals: 18,
+            icon: "🔴",
+            isNative: true
+        },
         {
             address: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
             symbol: "USDT",
@@ -1845,6 +1877,14 @@ const TOKENS = {
     // Testnets - using common testnet tokens
     11155111: [
         {
+            address: "native",
+            symbol: "ETH",
+            name: "Ethereum",
+            decimals: 18,
+            icon: "🧪",
+            isNative: true
+        },
+        {
             address: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
             symbol: "LINK",
             name: "Chainlink Token",
@@ -1853,6 +1893,14 @@ const TOKENS = {
         }
     ],
     80001: [
+        {
+            address: "native",
+            symbol: "MATIC",
+            name: "Polygon",
+            decimals: 18,
+            icon: "🧪",
+            isNative: true
+        },
         {
             address: "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
             symbol: "WMATIC",
@@ -1881,6 +1929,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useAccount$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/wagmi/dist/esm/hooks/useAccount.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useReadContract$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/wagmi/dist/esm/hooks/useReadContract.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useChainId$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/wagmi/dist/esm/hooks/useChainId.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useBalance$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/wagmi/dist/esm/hooks/useBalance.js [app-ssr] (ecmascript)");
 "use client";
 ;
 ;
@@ -1931,7 +1980,15 @@ const ERC20_ABI = [
 function TokenBalance({ token }) {
     const { address } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useAccount$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAccount"])();
     const chainId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useChainId$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useChainId"])();
-    const { data: balance, isLoading, isError } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useReadContract$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useReadContract"])({
+    // For native tokens, use useBalance hook
+    const { data: nativeBalance, isLoading: isNativeLoading, isError: isNativeError } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useBalance$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useBalance"])({
+        address: address,
+        query: {
+            enabled: !!address && token.isNative
+        }
+    });
+    // For ERC-20 tokens, use useReadContract hook
+    const { data: erc20Balance, isLoading: isErc20Loading, isError: isErc20Error } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useReadContract$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useReadContract"])({
         address: token.address,
         abi: ERC20_ABI,
         functionName: "balanceOf",
@@ -1939,9 +1996,12 @@ function TokenBalance({ token }) {
             address
         ] : undefined,
         query: {
-            enabled: !!address
+            enabled: !!address && !token.isNative && token.address !== 'native'
         }
     });
+    const isLoading = token.isNative ? isNativeLoading : isErc20Loading;
+    const isError = token.isNative ? isNativeError : isErc20Error;
+    const balance = token.isNative ? nativeBalance?.value : erc20Balance;
     const formatBalance = (balance, decimals)=>{
         if (!balance) return "0";
         // Convert from wei-like units to actual token units
@@ -1959,202 +2019,280 @@ function TokenBalance({ token }) {
     };
     if (isLoading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "p-4 bg-gray-50 dark:bg-slate-700 rounded-xl border border-gray-200 dark:border-slate-600",
+            className: "p-4 bg-[#1f1f1f] rounded-xl border border-[#333333]",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center space-x-3",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "text-2xl",
-                        children: token.icon
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "relative",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-2xl",
+                                children: token.icon
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/TokenBalance.tsx",
+                                lineNumber: 88,
+                                columnNumber: 13
+                            }, this),
+                            token.isNative && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-[#1f1f1f]"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/TokenBalance.tsx",
+                                lineNumber: 90,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/src/components/TokenBalance.tsx",
-                        lineNumber: 74,
+                        lineNumber: 87,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex-1",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-sm font-semibold text-gray-700 dark:text-gray-300",
-                                children: token.symbol
-                            }, void 0, false, {
+                                className: "text-sm font-semibold text-white flex items-center gap-2",
+                                children: [
+                                    token.symbol,
+                                    token.isNative && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded-full",
+                                        children: "Native"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/TokenBalance.tsx",
+                                        lineNumber: 97,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/TokenBalance.tsx",
-                                lineNumber: 76,
+                                lineNumber: 94,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-xs text-gray-500 dark:text-gray-400 flex items-center space-x-2",
+                                className: "text-xs text-[#a0a0a0] flex items-center space-x-2",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/TokenBalance.tsx",
-                                        lineNumber: 78,
+                                        lineNumber: 103,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: "Loading balance..."
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/TokenBalance.tsx",
-                                        lineNumber: 79,
+                                        lineNumber: 104,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/TokenBalance.tsx",
-                                lineNumber: 77,
+                                lineNumber: 102,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/TokenBalance.tsx",
-                        lineNumber: 75,
+                        lineNumber: 93,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/TokenBalance.tsx",
-                lineNumber: 73,
+                lineNumber: 86,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/TokenBalance.tsx",
-            lineNumber: 72,
+            lineNumber: 85,
             columnNumber: 7
         }, this);
     }
     if (isError) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-700",
+            className: "p-4 bg-red-600/20 rounded-xl border border-red-600/30",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center space-x-3",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "text-2xl",
-                        children: token.icon
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "relative",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-2xl",
+                                children: token.icon
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/TokenBalance.tsx",
+                                lineNumber: 117,
+                                columnNumber: 13
+                            }, this),
+                            token.isNative && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-[#1f1f1f]"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/TokenBalance.tsx",
+                                lineNumber: 119,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/src/components/TokenBalance.tsx",
-                        lineNumber: 91,
+                        lineNumber: 116,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex-1",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-sm font-semibold text-red-700 dark:text-red-300",
-                                children: token.symbol
-                            }, void 0, false, {
+                                className: "text-sm font-semibold text-red-400 flex items-center gap-2",
+                                children: [
+                                    token.symbol,
+                                    token.isNative && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded-full",
+                                        children: "Native"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/TokenBalance.tsx",
+                                        lineNumber: 126,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/TokenBalance.tsx",
-                                lineNumber: 93,
+                                lineNumber: 123,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-xs text-red-500 dark:text-red-400",
+                                className: "text-xs text-red-300",
                                 children: "Failed to load balance"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/TokenBalance.tsx",
-                                lineNumber: 94,
+                                lineNumber: 131,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/TokenBalance.tsx",
-                        lineNumber: 92,
+                        lineNumber: 122,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/TokenBalance.tsx",
-                lineNumber: 90,
+                lineNumber: 115,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/TokenBalance.tsx",
-            lineNumber: 89,
+            lineNumber: 114,
             columnNumber: 7
         }, this);
     }
     const formattedBalance = formatBalance(balance, token.decimals);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "p-4 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-200 hover:shadow-md card-hover",
+        className: "p-4 bg-[#1f1f1f] rounded-xl border border-[#333333] hover:bg-[#2a2a2a] transition-all duration-200 hover:shadow-md hover:shadow-blue-500/5",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-center justify-between",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex items-center space-x-3",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "text-2xl",
-                            children: token.icon
-                        }, void 0, false, {
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "relative",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-2xl",
+                                    children: token.icon
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/TokenBalance.tsx",
+                                    lineNumber: 145,
+                                    columnNumber: 13
+                                }, this),
+                                token.isNative && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-[#1f1f1f]"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/TokenBalance.tsx",
+                                    lineNumber: 147,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
                             fileName: "[project]/src/components/TokenBalance.tsx",
-                            lineNumber: 107,
+                            lineNumber: 144,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-sm font-semibold text-gray-900 dark:text-white",
-                                    children: token.symbol
-                                }, void 0, false, {
+                                    className: "text-sm font-semibold text-white flex items-center gap-2",
+                                    children: [
+                                        token.symbol,
+                                        token.isNative && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded-full",
+                                            children: "Native"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/TokenBalance.tsx",
+                                            lineNumber: 154,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
                                     fileName: "[project]/src/components/TokenBalance.tsx",
-                                    lineNumber: 109,
+                                    lineNumber: 151,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-xs text-gray-500 dark:text-gray-400",
+                                    className: "text-xs text-[#a0a0a0]",
                                     children: token.name
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/TokenBalance.tsx",
-                                    lineNumber: 110,
+                                    lineNumber: 159,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/TokenBalance.tsx",
-                            lineNumber: 108,
+                            lineNumber: 150,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/TokenBalance.tsx",
-                    lineNumber: 106,
+                    lineNumber: 143,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "text-right",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-sm font-mono text-gray-900 dark:text-white font-semibold",
+                            className: "text-sm font-mono text-white font-semibold",
                             children: formattedBalance
                         }, void 0, false, {
                             fileName: "[project]/src/components/TokenBalance.tsx",
-                            lineNumber: 114,
+                            lineNumber: 163,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-xs text-gray-500 dark:text-gray-400",
+                            className: "text-xs text-[#a0a0a0]",
                             children: token.symbol
                         }, void 0, false, {
                             fileName: "[project]/src/components/TokenBalance.tsx",
-                            lineNumber: 117,
+                            lineNumber: 166,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/TokenBalance.tsx",
-                    lineNumber: 113,
+                    lineNumber: 162,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/TokenBalance.tsx",
-            lineNumber: 105,
+            lineNumber: 142,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/TokenBalance.tsx",
-        lineNumber: 104,
+        lineNumber: 141,
         columnNumber: 5
     }, this);
 }
@@ -2202,7 +2340,7 @@ function TokenSelector() {
     };
     if (availableTokens.length === 0) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "p-6 bg-yellow-50 dark:bg-yellow-900/20 rounded-2xl border border-yellow-200 dark:border-yellow-700",
+            className: "p-6 bg-yellow-600/20 rounded-2xl border border-yellow-600/30",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center space-x-3",
                 children: [
@@ -2222,7 +2360,7 @@ function TokenSelector() {
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "text-yellow-800 dark:text-yellow-200 text-sm",
+                        className: "text-yellow-400 text-sm",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
                                 children: "No tokens available"
@@ -2261,7 +2399,7 @@ function TokenSelector() {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: selectAllTokens,
-                                className: "px-4 py-2 text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors font-medium",
+                                className: "px-4 py-2 text-sm bg-blue-600/20 text-blue-400 rounded-full hover:bg-blue-600/30 transition-colors font-medium",
                                 children: "Select All"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/TokenSelector.tsx",
@@ -2270,7 +2408,7 @@ function TokenSelector() {
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: clearAllTokens,
-                                className: "px-4 py-2 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium",
+                                className: "px-4 py-2 text-sm bg-[#2a2a2a] text-[#e0e0e0] rounded-full hover:bg-[#333333] transition-colors font-medium",
                                 children: "Clear All"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/TokenSelector.tsx",
@@ -2284,7 +2422,7 @@ function TokenSelector() {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "text-sm text-gray-500 dark:text-gray-400 font-medium",
+                        className: "text-sm text-[#a0a0a0] font-medium",
                         children: [
                             selectedTokens.length,
                             " of ",
@@ -2319,14 +2457,30 @@ function TokenSelector() {
                             const isSelected = selectedTokens.some((t)=>t.address === token.address);
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>toggleToken(token),
-                                className: `p-4 rounded-xl border text-left transition-all duration-200 hover:scale-105 ${isSelected ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700 text-blue-900 dark:text-blue-100 shadow-lg' : 'bg-white dark:bg-slate-700 border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-600 hover:shadow-md'}`,
+                                className: `p-4 rounded-xl border text-left transition-all duration-200 hover:scale-105 ${isSelected ? 'bg-blue-600/20 border-blue-500 text-blue-100 shadow-lg shadow-blue-500/10' : 'bg-[#1f1f1f] border-[#333333] text-[#e0e0e0] hover:bg-[#2a2a2a] hover:shadow-md hover:shadow-blue-500/5'}`,
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex items-center space-x-3",
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-2xl",
-                                            children: token.icon
-                                        }, void 0, false, {
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "relative",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-2xl",
+                                                    children: token.icon
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/TokenSelector.tsx",
+                                                    lineNumber: 88,
+                                                    columnNumber: 21
+                                                }, this),
+                                                token.isNative && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-[#1f1f1f]"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/TokenSelector.tsx",
+                                                    lineNumber: 90,
+                                                    columnNumber: 23
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
                                             fileName: "[project]/src/components/TokenSelector.tsx",
                                             lineNumber: 87,
                                             columnNumber: 19
@@ -2335,25 +2489,35 @@ function TokenSelector() {
                                             className: "flex-1 min-w-0",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "text-sm font-semibold truncate",
-                                                    children: token.symbol
-                                                }, void 0, false, {
+                                                    className: "text-sm font-semibold truncate flex items-center gap-2",
+                                                    children: [
+                                                        token.symbol,
+                                                        token.isNative && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded-full",
+                                                            children: "Native"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/TokenSelector.tsx",
+                                                            lineNumber: 97,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
                                                     fileName: "[project]/src/components/TokenSelector.tsx",
-                                                    lineNumber: 89,
+                                                    lineNumber: 94,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "text-xs text-gray-500 dark:text-gray-400 truncate",
+                                                    className: "text-xs text-[#a0a0a0] truncate",
                                                     children: token.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/TokenSelector.tsx",
-                                                    lineNumber: 90,
+                                                    lineNumber: 102,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/TokenSelector.tsx",
-                                            lineNumber: 88,
+                                            lineNumber: 93,
                                             columnNumber: 19
                                         }, this),
                                         isSelected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2363,12 +2527,12 @@ function TokenSelector() {
                                                 children: "✓"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/TokenSelector.tsx",
-                                                lineNumber: 96,
+                                                lineNumber: 108,
                                                 columnNumber: 23
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/TokenSelector.tsx",
-                                            lineNumber: 95,
+                                            lineNumber: 107,
                                             columnNumber: 21
                                         }, this)
                                     ]
@@ -2398,11 +2562,11 @@ function TokenSelector() {
                 className: "space-y-4",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                        className: "text-lg font-semibold text-gray-900 dark:text-white",
+                        className: "text-lg font-semibold text-white",
                         children: "Token Balances"
                     }, void 0, false, {
                         fileName: "[project]/src/components/TokenSelector.tsx",
-                        lineNumber: 109,
+                        lineNumber: 121,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2411,18 +2575,18 @@ function TokenSelector() {
                                 token: token
                             }, token.address, false, {
                                 fileName: "[project]/src/components/TokenSelector.tsx",
-                                lineNumber: 112,
+                                lineNumber: 124,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/TokenSelector.tsx",
-                        lineNumber: 110,
+                        lineNumber: 122,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/TokenSelector.tsx",
-                lineNumber: 108,
+                lineNumber: 120,
                 columnNumber: 9
             }, this)
         ]
