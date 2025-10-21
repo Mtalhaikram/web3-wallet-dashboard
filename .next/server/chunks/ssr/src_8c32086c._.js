@@ -2612,6 +2612,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dis
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useBalance$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/wagmi/dist/esm/hooks/useBalance.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$viem$2f$_esm$2f$utils$2f$unit$2f$parseEther$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/viem/_esm/utils/unit/parseEther.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$viem$2f$_esm$2f$utils$2f$unit$2f$formatEther$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/viem/_esm/utils/unit/formatEther.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$viem$2f$_esm$2f$utils$2f$address$2f$isAddress$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/viem/_esm/utils/address/isAddress.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/constants/networks.ts [app-ssr] (ecmascript)");
 "use client";
 ;
@@ -2629,9 +2630,79 @@ function SendETH() {
     const [amount, setAmount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
     const [isValidating, setIsValidating] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [validationError, setValidationError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
+    const [recipientError, setRecipientError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
+    const [amountError, setAmountError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
+    const [isRecipientValid, setIsRecipientValid] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isAmountValid, setIsAmountValid] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const currentNetwork = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getNetworkById"])(chainId);
     const isSupportedNetwork = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constants$2f$networks$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["NETWORKS"].some((network)=>network.id === chainId);
     const { sendTransaction, isPending: isSending, isSuccess, isError, error, data: hash } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$wagmi$2f$dist$2f$esm$2f$hooks$2f$useSendTransaction$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSendTransaction"])();
+    // Real-time recipient validation
+    const validateRecipient = (address)=>{
+        if (!address.trim()) {
+            setRecipientError("");
+            setIsRecipientValid(false);
+            return;
+        }
+        const trimmedAddress = address.trim();
+        // Check if it's a valid Ethereum address using viem's isAddress
+        if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$viem$2f$_esm$2f$utils$2f$address$2f$isAddress$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["isAddress"])(trimmedAddress)) {
+            setRecipientError("Please enter a valid Ethereum address (0x...)");
+            setIsRecipientValid(false);
+            return;
+        }
+        // Check if it's the same as sender address
+        if (address && trimmedAddress.toLowerCase() === address?.toLowerCase()) {
+            setRecipientError("Cannot send to your own address");
+            setIsRecipientValid(false);
+            return;
+        }
+        setRecipientError("");
+        setIsRecipientValid(true);
+    };
+    // Real-time amount validation
+    const validateAmount = (amountValue)=>{
+        if (!amountValue.trim()) {
+            setAmountError("");
+            setIsAmountValid(false);
+            return;
+        }
+        const amountNum = parseFloat(amountValue);
+        if (isNaN(amountNum)) {
+            setAmountError("Please enter a valid number");
+            setIsAmountValid(false);
+            return;
+        }
+        if (amountNum <= 0) {
+            setAmountError("Amount must be greater than 0");
+            setIsAmountValid(false);
+            return;
+        }
+        // Check if user has enough balance
+        if (balance) {
+            const balanceInEth = parseFloat((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$viem$2f$_esm$2f$utils$2f$unit$2f$formatEther$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["formatEther"])(balance.value));
+            if (amountNum > balanceInEth) {
+                setAmountError(`Insufficient balance. You have ${balanceInEth.toFixed(6)} ${balance.symbol}`);
+                setIsAmountValid(false);
+                return;
+            }
+        }
+        setAmountError("");
+        setIsAmountValid(true);
+    };
+    // Real-time validation effects
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        validateRecipient(recipient);
+    }, [
+        recipient,
+        address
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        validateAmount(amount);
+    }, [
+        amount,
+        balance
+    ]);
     const validateForm = async ()=>{
         setIsValidating(true);
         setValidationError("");
@@ -2647,38 +2718,17 @@ function SendETH() {
             setIsValidating(false);
             return false;
         }
-        // Validate recipient address
-        if (!recipient.trim()) {
-            setValidationError("Please enter a recipient address");
+        // Check if recipient is valid (real-time validation should have caught this)
+        if (!isRecipientValid || recipientError) {
+            setValidationError(recipientError || "Please enter a valid recipient address");
             setIsValidating(false);
             return false;
         }
-        // Basic address validation (42 characters, starts with 0x)
-        if (!/^0x[a-fA-F0-9]{40}$/.test(recipient.trim())) {
-            setValidationError("Please enter a valid Ethereum address");
+        // Check if amount is valid (real-time validation should have caught this)
+        if (!isAmountValid || amountError) {
+            setValidationError(amountError || "Please enter a valid amount");
             setIsValidating(false);
             return false;
-        }
-        // Validate amount
-        if (!amount.trim()) {
-            setValidationError("Please enter an amount");
-            setIsValidating(false);
-            return false;
-        }
-        const amountNum = parseFloat(amount);
-        if (isNaN(amountNum) || amountNum <= 0) {
-            setValidationError("Please enter a valid amount greater than 0");
-            setIsValidating(false);
-            return false;
-        }
-        // Check if user has enough balance
-        if (balance) {
-            const balanceInEth = parseFloat((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$viem$2f$_esm$2f$utils$2f$unit$2f$formatEther$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["formatEther"])(balance.value));
-            if (amountNum > balanceInEth) {
-                setValidationError(`Insufficient balance. You have ${balanceInEth.toFixed(6)} ${balance.symbol}`);
-                setIsValidating(false);
-                return false;
-            }
         }
         setIsValidating(false);
         return true;
@@ -2715,6 +2765,10 @@ function SendETH() {
         setRecipient("");
         setAmount("");
         setValidationError("");
+        setRecipientError("");
+        setAmountError("");
+        setIsRecipientValid(false);
+        setIsAmountValid(false);
     };
     if (!isConnected) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2730,12 +2784,12 @@ function SendETH() {
                                 children: "💸"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 135,
+                                lineNumber: 192,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 134,
+                            lineNumber: 191,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2745,7 +2799,7 @@ function SendETH() {
                                     children: "Send Native ETH"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 138,
+                                    lineNumber: 195,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2753,19 +2807,19 @@ function SendETH() {
                                     children: "Transfer native tokens"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 141,
+                                    lineNumber: 198,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 137,
+                            lineNumber: 194,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/SendETH.tsx",
-                    lineNumber: 133,
+                    lineNumber: 190,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2778,12 +2832,12 @@ function SendETH() {
                                 children: "🔒"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 148,
+                                lineNumber: 205,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 147,
+                            lineNumber: 204,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2791,19 +2845,19 @@ function SendETH() {
                             children: "Please connect your wallet to send ETH"
                         }, void 0, false, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 150,
+                            lineNumber: 207,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/SendETH.tsx",
-                    lineNumber: 146,
+                    lineNumber: 203,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/SendETH.tsx",
-            lineNumber: 132,
+            lineNumber: 189,
             columnNumber: 7
         }, this);
     }
@@ -2820,12 +2874,12 @@ function SendETH() {
                             children: "💸"
                         }, void 0, false, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 160,
+                            lineNumber: 217,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/SendETH.tsx",
-                        lineNumber: 159,
+                        lineNumber: 216,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2835,7 +2889,7 @@ function SendETH() {
                                 children: "Send Native ETH"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 163,
+                                lineNumber: 220,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2843,19 +2897,19 @@ function SendETH() {
                                 children: "Transfer native tokens"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 166,
+                                lineNumber: 223,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/SendETH.tsx",
-                        lineNumber: 162,
+                        lineNumber: 219,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/SendETH.tsx",
-                lineNumber: 158,
+                lineNumber: 215,
                 columnNumber: 7
             }, this),
             !isSupportedNetwork && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2868,7 +2922,7 @@ function SendETH() {
                             children: "⚠️"
                         }, void 0, false, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 175,
+                            lineNumber: 232,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2878,7 +2932,7 @@ function SendETH() {
                                     children: "Unsupported Network"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 177,
+                                    lineNumber: 234,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2886,24 +2940,24 @@ function SendETH() {
                                     children: "Please switch to a supported network to send ETH."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 178,
+                                    lineNumber: 235,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 176,
+                            lineNumber: 233,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/SendETH.tsx",
-                    lineNumber: 174,
+                    lineNumber: 231,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/SendETH.tsx",
-                lineNumber: 173,
+                lineNumber: 230,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2919,26 +2973,65 @@ function SendETH() {
                                 children: "Recipient Address"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 186,
+                                lineNumber: 243,
                                 columnNumber: 11
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                type: "text",
-                                id: "recipient",
-                                value: recipient,
-                                onChange: (e)=>setRecipient(e.target.value),
-                                placeholder: "0x...",
-                                className: "input-field",
-                                disabled: isSending || !isSupportedNetwork
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "relative",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "text",
+                                        id: "recipient",
+                                        value: recipient,
+                                        onChange: (e)=>setRecipient(e.target.value),
+                                        placeholder: "0x...",
+                                        className: `input-field pr-10 ${recipient && recipientError ? 'border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-red-500' : recipient && isRecipientValid ? 'border-green-300 dark:border-green-600 focus:border-green-500 focus:ring-green-500' : ''}`,
+                                        disabled: isSending || !isSupportedNetwork
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/SendETH.tsx",
+                                        lineNumber: 247,
+                                        columnNumber: 13
+                                    }, this),
+                                    recipient && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "absolute right-3 top-1/2 transform -translate-y-1/2",
+                                        children: isRecipientValid ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-green-500 text-lg",
+                                            children: "✓"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/SendETH.tsx",
+                                            lineNumber: 265,
+                                            columnNumber: 19
+                                        }, this) : recipientError ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-red-500 text-lg",
+                                            children: "✗"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/SendETH.tsx",
+                                            lineNumber: 267,
+                                            columnNumber: 19
+                                        }, this) : null
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/SendETH.tsx",
+                                        lineNumber: 263,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/SendETH.tsx",
+                                lineNumber: 246,
+                                columnNumber: 11
+                            }, this),
+                            recipientError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-red-600 dark:text-red-400 text-sm",
+                                children: recipientError
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 189,
-                                columnNumber: 11
+                                lineNumber: 273,
+                                columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/SendETH.tsx",
-                        lineNumber: 185,
+                        lineNumber: 242,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2954,7 +3047,7 @@ function SendETH() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 201,
+                                lineNumber: 278,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2968,34 +3061,72 @@ function SendETH() {
                                         placeholder: "0.0",
                                         step: "0.000001",
                                         min: "0",
-                                        className: "input-field pr-20",
+                                        className: `input-field pr-20 ${amount && amountError ? 'border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-red-500' : amount && isAmountValid ? 'border-green-300 dark:border-green-600 focus:border-green-500 focus:ring-green-500' : ''}`,
                                         disabled: isSending || !isSupportedNetwork
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/SendETH.tsx",
-                                        lineNumber: 205,
+                                        lineNumber: 282,
                                         columnNumber: 13
                                     }, this),
-                                    balance && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 dark:text-gray-400",
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2",
                                         children: [
-                                            "Max: ",
-                                            parseFloat((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$viem$2f$_esm$2f$utils$2f$unit$2f$formatEther$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["formatEther"])(balance.value)).toFixed(6)
+                                            amount && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                children: isAmountValid ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-green-500 text-lg",
+                                                    children: "✓"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/SendETH.tsx",
+                                                    lineNumber: 303,
+                                                    columnNumber: 21
+                                                }, this) : amountError ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-red-500 text-lg",
+                                                    children: "✗"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/SendETH.tsx",
+                                                    lineNumber: 305,
+                                                    columnNumber: 21
+                                                }, this) : null
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/SendETH.tsx",
+                                                lineNumber: 301,
+                                                columnNumber: 17
+                                            }, this),
+                                            balance && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "text-xs text-gray-500 dark:text-gray-400",
+                                                children: [
+                                                    "Max: ",
+                                                    parseFloat((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$viem$2f$_esm$2f$utils$2f$unit$2f$formatEther$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["formatEther"])(balance.value)).toFixed(6)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/SendETH.tsx",
+                                                lineNumber: 310,
+                                                columnNumber: 17
+                                            }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/SendETH.tsx",
-                                        lineNumber: 217,
-                                        columnNumber: 15
+                                        lineNumber: 299,
+                                        columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 204,
+                                lineNumber: 281,
                                 columnNumber: 11
+                            }, this),
+                            amountError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-red-600 dark:text-red-400 text-sm",
+                                children: amountError
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/SendETH.tsx",
+                                lineNumber: 317,
+                                columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/SendETH.tsx",
-                        lineNumber: 200,
+                        lineNumber: 277,
                         columnNumber: 9
                     }, this),
                     validationError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3008,7 +3139,7 @@ function SendETH() {
                                     children: "❌"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 227,
+                                    lineNumber: 324,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3016,23 +3147,23 @@ function SendETH() {
                                     children: validationError
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 228,
+                                    lineNumber: 325,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 226,
+                            lineNumber: 323,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/SendETH.tsx",
-                        lineNumber: 225,
+                        lineNumber: 322,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         type: "submit",
-                        disabled: isSending || isValidating || !isSupportedNetwork,
+                        disabled: isSending || isValidating || !isSupportedNetwork || !isRecipientValid || !isAmountValid,
                         className: "btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed",
                         children: isSending ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center justify-center space-x-2",
@@ -3041,20 +3172,20 @@ function SendETH() {
                                     className: "w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 240,
+                                    lineNumber: 337,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     children: "Sending..."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 241,
+                                    lineNumber: 338,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 239,
+                            lineNumber: 336,
                             columnNumber: 13
                         }, this) : isValidating ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center justify-center space-x-2",
@@ -3063,31 +3194,31 @@ function SendETH() {
                                     className: "w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 245,
+                                    lineNumber: 342,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     children: "Validating..."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 246,
+                                    lineNumber: 343,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 244,
+                            lineNumber: 341,
                             columnNumber: 13
                         }, this) : `Send ${currentNetwork?.symbol || "ETH"}`
                     }, void 0, false, {
                         fileName: "[project]/src/components/SendETH.tsx",
-                        lineNumber: 233,
+                        lineNumber: 330,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/SendETH.tsx",
-                lineNumber: 184,
+                lineNumber: 241,
                 columnNumber: 7
             }, this),
             isSuccess && hash && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3104,17 +3235,17 @@ function SendETH() {
                                     children: "✅"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 260,
+                                    lineNumber: 357,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 259,
+                                lineNumber: 356,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 258,
+                            lineNumber: 355,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3125,7 +3256,7 @@ function SendETH() {
                                     children: "Transaction Sent Successfully!"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 264,
+                                    lineNumber: 361,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3138,7 +3269,7 @@ function SendETH() {
                                                     children: "Transaction Hash:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/SendETH.tsx",
-                                                    lineNumber: 267,
+                                                    lineNumber: 364,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3148,18 +3279,18 @@ function SendETH() {
                                                         children: hash
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/SendETH.tsx",
-                                                        lineNumber: 269,
+                                                        lineNumber: 366,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/SendETH.tsx",
-                                                    lineNumber: 268,
+                                                    lineNumber: 365,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/SendETH.tsx",
-                                            lineNumber: 266,
+                                            lineNumber: 363,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3184,18 +3315,18 @@ function SendETH() {
                                                                 d: "M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/SendETH.tsx",
-                                                                lineNumber: 283,
+                                                                lineNumber: 380,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/SendETH.tsx",
-                                                            lineNumber: 282,
+                                                            lineNumber: 379,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/SendETH.tsx",
-                                                    lineNumber: 275,
+                                                    lineNumber: 372,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3204,36 +3335,36 @@ function SendETH() {
                                                     children: "Send Another"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/SendETH.tsx",
-                                                    lineNumber: 286,
+                                                    lineNumber: 383,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/SendETH.tsx",
-                                            lineNumber: 274,
+                                            lineNumber: 371,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 265,
+                                    lineNumber: 362,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 263,
+                            lineNumber: 360,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/SendETH.tsx",
-                    lineNumber: 257,
+                    lineNumber: 354,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/SendETH.tsx",
-                lineNumber: 256,
+                lineNumber: 353,
                 columnNumber: 9
             }, this),
             isError && error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3250,17 +3381,17 @@ function SendETH() {
                                     children: "❌"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 304,
+                                    lineNumber: 401,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SendETH.tsx",
-                                lineNumber: 303,
+                                lineNumber: 400,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 302,
+                            lineNumber: 399,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3271,7 +3402,7 @@ function SendETH() {
                                     children: "Transaction Failed"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 308,
+                                    lineNumber: 405,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3279,30 +3410,30 @@ function SendETH() {
                                     children: error.message || "An error occurred while sending the transaction"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SendETH.tsx",
-                                    lineNumber: 309,
+                                    lineNumber: 406,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/SendETH.tsx",
-                            lineNumber: 307,
+                            lineNumber: 404,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/SendETH.tsx",
-                    lineNumber: 301,
+                    lineNumber: 398,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/SendETH.tsx",
-                lineNumber: 300,
+                lineNumber: 397,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/SendETH.tsx",
-        lineNumber: 157,
+        lineNumber: 214,
         columnNumber: 5
     }, this);
 }

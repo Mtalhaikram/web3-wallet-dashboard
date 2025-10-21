@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAccount, useSendTransaction, useChainId, useBalance } from "wagmi";
-import { parseEther, formatEther } from "viem";
+import { parseEther, formatEther, isAddress } from "viem";
 import { getNetworkById, NETWORKS } from "@/constants/networks";
 
 export default function SendETH() {
@@ -14,6 +14,10 @@ export default function SendETH() {
   const [amount, setAmount] = useState("");
   const [isValidating, setIsValidating] = useState(false);
   const [validationError, setValidationError] = useState("");
+  const [recipientError, setRecipientError] = useState("");
+  const [amountError, setAmountError] = useState("");
+  const [isRecipientValid, setIsRecipientValid] = useState(false);
+  const [isAmountValid, setIsAmountValid] = useState(false);
 
   const currentNetwork = getNetworkById(chainId);
   const isSupportedNetwork = NETWORKS.some(network => network.id === chainId);
@@ -26,6 +30,79 @@ export default function SendETH() {
     error,
     data: hash,
   } = useSendTransaction();
+
+  // Real-time recipient validation
+  const validateRecipient = (address: string) => {
+    if (!address.trim()) {
+      setRecipientError("");
+      setIsRecipientValid(false);
+      return;
+    }
+
+    const trimmedAddress = address.trim();
+    
+    // Check if it's a valid Ethereum address using viem's isAddress
+    if (!isAddress(trimmedAddress)) {
+      setRecipientError("Please enter a valid Ethereum address (0x...)");
+      setIsRecipientValid(false);
+      return;
+    }
+
+    // Check if it's the same as sender address
+    if (address && trimmedAddress.toLowerCase() === address?.toLowerCase()) {
+      setRecipientError("Cannot send to your own address");
+      setIsRecipientValid(false);
+      return;
+    }
+
+    setRecipientError("");
+    setIsRecipientValid(true);
+  };
+
+  // Real-time amount validation
+  const validateAmount = (amountValue: string) => {
+    if (!amountValue.trim()) {
+      setAmountError("");
+      setIsAmountValid(false);
+      return;
+    }
+
+    const amountNum = parseFloat(amountValue);
+    
+    if (isNaN(amountNum)) {
+      setAmountError("Please enter a valid number");
+      setIsAmountValid(false);
+      return;
+    }
+
+    if (amountNum <= 0) {
+      setAmountError("Amount must be greater than 0");
+      setIsAmountValid(false);
+      return;
+    }
+
+    // Check if user has enough balance
+    if (balance) {
+      const balanceInEth = parseFloat(formatEther(balance.value));
+      if (amountNum > balanceInEth) {
+        setAmountError(`Insufficient balance. You have ${balanceInEth.toFixed(6)} ${balance.symbol}`);
+        setIsAmountValid(false);
+        return;
+      }
+    }
+
+    setAmountError("");
+    setIsAmountValid(true);
+  };
+
+  // Real-time validation effects
+  useEffect(() => {
+    validateRecipient(recipient);
+  }, [recipient, address]);
+
+  useEffect(() => {
+    validateAmount(amount);
+  }, [amount, balance]);
 
   const validateForm = async () => {
     setIsValidating(true);
@@ -45,42 +122,18 @@ export default function SendETH() {
       return false;
     }
 
-    // Validate recipient address
-    if (!recipient.trim()) {
-      setValidationError("Please enter a recipient address");
+    // Check if recipient is valid (real-time validation should have caught this)
+    if (!isRecipientValid || recipientError) {
+      setValidationError(recipientError || "Please enter a valid recipient address");
       setIsValidating(false);
       return false;
     }
 
-    // Basic address validation (42 characters, starts with 0x)
-    if (!/^0x[a-fA-F0-9]{40}$/.test(recipient.trim())) {
-      setValidationError("Please enter a valid Ethereum address");
+    // Check if amount is valid (real-time validation should have caught this)
+    if (!isAmountValid || amountError) {
+      setValidationError(amountError || "Please enter a valid amount");
       setIsValidating(false);
       return false;
-    }
-
-    // Validate amount
-    if (!amount.trim()) {
-      setValidationError("Please enter an amount");
-      setIsValidating(false);
-      return false;
-    }
-
-    const amountNum = parseFloat(amount);
-    if (isNaN(amountNum) || amountNum <= 0) {
-      setValidationError("Please enter a valid amount greater than 0");
-      setIsValidating(false);
-      return false;
-    }
-
-    // Check if user has enough balance
-    if (balance) {
-      const balanceInEth = parseFloat(formatEther(balance.value));
-      if (amountNum > balanceInEth) {
-        setValidationError(`Insufficient balance. You have ${balanceInEth.toFixed(6)} ${balance.symbol}`);
-        setIsValidating(false);
-        return false;
-      }
     }
 
     setIsValidating(false);
@@ -125,6 +178,10 @@ export default function SendETH() {
     setRecipient("");
     setAmount("");
     setValidationError("");
+    setRecipientError("");
+    setAmountError("");
+    setIsRecipientValid(false);
+    setIsAmountValid(false);
   };
 
   if (!isConnected) {
@@ -186,15 +243,35 @@ export default function SendETH() {
           <label htmlFor="recipient" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Recipient Address
           </label>
-          <input
-            type="text"
-            id="recipient"
-            value={recipient}
-            onChange={(e) => setRecipient(e.target.value)}
-            placeholder="0x..."
-            className="input-field"
-            disabled={isSending || !isSupportedNetwork}
-          />
+          <div className="relative">
+            <input
+              type="text"
+              id="recipient"
+              value={recipient}
+              onChange={(e) => setRecipient(e.target.value)}
+              placeholder="0x..."
+              className={`input-field pr-10 ${
+                recipient && recipientError 
+                  ? 'border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-red-500' 
+                  : recipient && isRecipientValid 
+                  ? 'border-green-300 dark:border-green-600 focus:border-green-500 focus:ring-green-500'
+                  : ''
+              }`}
+              disabled={isSending || !isSupportedNetwork}
+            />
+            {recipient && (
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                {isRecipientValid ? (
+                  <span className="text-green-500 text-lg">✓</span>
+                ) : recipientError ? (
+                  <span className="text-red-500 text-lg">✗</span>
+                ) : null}
+              </div>
+            )}
+          </div>
+          {recipientError && (
+            <p className="text-red-600 dark:text-red-400 text-sm">{recipientError}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -210,15 +287,35 @@ export default function SendETH() {
               placeholder="0.0"
               step="0.000001"
               min="0"
-              className="input-field pr-20"
+              className={`input-field pr-20 ${
+                amount && amountError 
+                  ? 'border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-red-500' 
+                  : amount && isAmountValid 
+                  ? 'border-green-300 dark:border-green-600 focus:border-green-500 focus:ring-green-500'
+                  : ''
+              }`}
               disabled={isSending || !isSupportedNetwork}
             />
-            {balance && (
-              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 dark:text-gray-400">
-                Max: {parseFloat(formatEther(balance.value)).toFixed(6)}
-              </div>
-            )}
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+              {amount && (
+                <div>
+                  {isAmountValid ? (
+                    <span className="text-green-500 text-lg">✓</span>
+                  ) : amountError ? (
+                    <span className="text-red-500 text-lg">✗</span>
+                  ) : null}
+                </div>
+              )}
+              {balance && (
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  Max: {parseFloat(formatEther(balance.value)).toFixed(6)}
+                </div>
+              )}
+            </div>
           </div>
+          {amountError && (
+            <p className="text-red-600 dark:text-red-400 text-sm">{amountError}</p>
+          )}
         </div>
 
         {validationError && (
@@ -232,7 +329,7 @@ export default function SendETH() {
 
         <button
           type="submit"
-          disabled={isSending || isValidating || !isSupportedNetwork}
+          disabled={isSending || isValidating || !isSupportedNetwork || !isRecipientValid || !isAmountValid}
           className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSending ? (
